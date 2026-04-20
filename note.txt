@@ -1,0 +1,17 @@
+
+
+go commands for access teh dependecies used
+
+mongo db === go get go.mongodb.org/mongo-driver/mongo
+
+gin === go get github.com/gin-gonic/gin@latest
+
+dotenv === go get github.com/joho/godotenv
+
+mongo options === go get go.mongodb.org/mongo-driver/mongo/options
+
+
+
+folder structure
+
+1. a config file for loading the env variables
