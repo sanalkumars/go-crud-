@@ -99,3 +99,36 @@ func (h *Handler) GetNoteByIDHandler(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, note)
 }
+
+
+
+func ( h *Handler ) deleteNoteHnadler( c *gin.Context ){
+
+	idStr:= c.Param("id")
+
+	objId , err := primitive.ObjectIDFromHex(idStr)
+
+	if( err != nil){
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid ID format",
+		})
+		return
+	}
+
+	deleted , err := h.repo.DeleteNote(c.Request.Context(),objId)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to delete note",
+		})
+		return
+	}
+	if deleted {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Note deleted successfully",
+		})
+	} else {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "Note not found",
+		})
+	}
+}

@@ -80,7 +80,7 @@ func (r *Repo) getNoteById(ctx context.Context, id string) (Note, error) {
 	fmt.Println("id got 2", id)
 	opCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
-
+	// convert string id to mongo ObjectID
 	objID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return Note{}, fmt.Errorf("Invalid ID format")
@@ -94,4 +94,25 @@ func (r *Repo) getNoteById(ctx context.Context, id string) (Note, error) {
 	}
 	return note, nil
 
+}
+
+
+
+
+func (r *Repo) DeleteNote(ctx context.Context, id primitive.ObjectID ) (bool , error){
+	opCtx , cancel := context.WithTimeout(ctx , 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{"_id":id}
+
+	res , err := r.coll.DeleteOne(opCtx , filter)
+	if ( err !=nil){
+		return false ,fmt.Errorf("Failed to delete note")
+	}
+
+	if res.DeletedCount == 0 {
+		return false , nil
+	}
+
+	return  true ,nil
 }

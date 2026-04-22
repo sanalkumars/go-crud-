@@ -21,6 +21,7 @@ func RegisterRoutes( r *gin.Engine , db *mongo.Database){
 		noteGroups.GET("/", handler.GetAllNotesHandler)
 		noteGroups.GET("/:id",handler.GetNoteByIDHandler)
 		noteGroups.PUT("/:id",handler.updateNoteHandler)
+		noteGroups.DELETE("/:id", handler.deleteNoteHnadler)
 		// we will add more routes here for reading, updating and deleting notes.
 
 	}
