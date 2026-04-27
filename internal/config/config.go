@@ -11,6 +11,7 @@ type Config struct {
 	MongoURI   string
 	MongoDB    string
 	ServerPort string
+	JWTSecret  string
 }
 
 func LoadConfig() (*Config, error) {
@@ -43,10 +44,16 @@ func LoadConfig() (*Config, error) {
 		return nil, err
 	}
 
+	jwtSecret, err := extractENV("JWT_SECRET")
+	if err != nil {
+		return nil, err
+	}
+
 	return &Config{
 		MongoURI:   mongoURI,
 		MongoDB:    mongoDB,
 		ServerPort: serverPort,
+		JWTSecret:  jwtSecret,
 	}, nil
 }
 

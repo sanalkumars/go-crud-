@@ -32,7 +32,7 @@ func main() {
 		}
 	}()
 
-	router := server.NewRouter(database)
+	router := server.NewRouter(database, cfg.JWTSecret)
 
 	addr := fmt.Sprintf(":%s", cfg.ServerPort)
 
